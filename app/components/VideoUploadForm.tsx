@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { useNotification } from "./Notification";
 import { apiClient } from "@/lib/api-client";
 import FileUpload from "./FileUpload";
+import Link from "next/link";
 
 interface VideoFormData {
   title: string;
@@ -121,20 +122,22 @@ export default function VideoUploadForm() {
         )}
       </div>
 
-      <button
-        type="submit"
-        className="btn btn-primary btn-block"
-        disabled={loading || !uploadProgress}
-      >
-        {loading ? (
-          <>
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            Publishing Video...
-          </>
-        ) : (
-          "Publish Video"
-        )}
-      </button>
+      <Link href="/">
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={loading || !uploadProgress}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Publishing Video...
+            </>
+          ) : (
+            "Publish Video"
+          )}
+        </button>
+      </Link>
     </form>
   );
 }
