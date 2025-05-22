@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <div className="navbar bg-base-300 sticky top-0 z-40">
-      <div className="flex items-center pt-5 container mx-auto">
+      <div className="container mx-auto">
         <div className="flex-1 px-2 lg:flex-none">
           <Link
             href="/"
