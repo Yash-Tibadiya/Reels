@@ -48,18 +48,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center p-4 relative pt-16">
+    <div className="flex items-center justify-center p-4 relative pt-12">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-3xl animate-spin-slow"></div>
-      </div>
+      </div> */}
 
       {/* Main Login Container */}
       <div className="relative z-10 w-full max-w-md">
         {/* Logo Section */}
-        <div className="text-center mb-8">
+        <div className="flex items-center justify-center flex-col text-center mb-8">
           <div className="inline-flex items-center space-x-3 mb-4">
             <div className="relative">
               <Video className="w-12 h-12 text-white" />
@@ -82,7 +82,9 @@ export default function Login() {
         {/* Login Form */}
         <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl shadow-purple-900/20 p-8">
           <div className="flex items-center space-x-2 mb-6">
-            <Sparkles className="w-5 h-5 text-purple-400" />
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg border border-white/10 backdrop-blur-sm">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
             <h2 className="text-2xl font-bold text-white">Sign In</h2>
           </div>
 
@@ -147,14 +149,14 @@ export default function Login() {
             </div>
 
             {/* Forgot Password Link */}
-            <div className="text-right">
+            {/* <div className="text-right">
               <Link
                 href="/forgot-password"
                 className="text-sm text-purple-300 hover:text-purple-200 transition-colors duration-200"
               >
                 Forgot your password?
               </Link>
-            </div>
+            </div> */}
 
             {/* Login Button */}
             <button
