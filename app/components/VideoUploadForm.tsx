@@ -128,7 +128,7 @@ export default function VideoUploadForm() {
 
         <button
           type="submit"
-          className="btn btn-primary btn-block"
+          className="btn btn-primary btn-block mt-4"
           disabled={loading || !uploadProgress}
         >
           {loading ? (
