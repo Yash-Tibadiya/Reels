@@ -19,8 +19,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
-          <Header />
-          <main className="container mx-auto px-4 py-8">{children}</main>
+          <div className="flex flex-col h-screen overflow-hidden">
+            <Header />
+            <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+              {children}
+            </main>
+          </div>
         </Providers>
       </body>
     </html>
