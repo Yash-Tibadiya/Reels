@@ -2,11 +2,24 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Home, User, Video, LogOut, Settings, Bell } from "lucide-react";
-import { useNotification } from "./Notification";
+import { useNotification } from "./Notification"; // Assuming this path is correct
 
 export default function Header() {
   const { data: session } = useSession();
   const { showNotification } = useNotification();
+
+  // Helper function to close the dropdown by blurring the active element
+  const closeDropdown = () => {
+    // Ensure this runs after other event handlers
+    setTimeout(() => {
+      if (
+        document.activeElement &&
+        typeof (document.activeElement as HTMLElement).blur === "function"
+      ) {
+        (document.activeElement as HTMLElement).blur();
+      }
+    }, 0);
+  };
 
   const handleSignOut = async () => {
     try {
@@ -14,6 +27,8 @@ export default function Header() {
       showNotification("Signed out successfully", "success");
     } catch {
       showNotification("Failed to sign out", "error");
+    } finally {
+      closeDropdown(); // Close dropdown after sign out attempt
     }
   };
 
@@ -67,7 +82,7 @@ export default function Header() {
               </div>
 
               <ul
-                tabIndex={0}
+                tabIndex={0} // This makes the dropdown content focusable, which is part of how DaisyUI handles it.
                 className="dropdown-content z-[1] mt-4 w-72 bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-purple-900/20 overflow-hidden"
               >
                 {session ? (
@@ -96,12 +111,13 @@ export default function Header() {
                         <Link
                           href="/upload"
                           className="flex items-center space-x-3 px-6 py-3 hover:bg-gradient-to-r hover:from-purple-600/10 hover:to-blue-600/10 text-white/90 hover:text-white transition-all duration-300 group"
-                          onClick={() =>
+                          onClick={() => {
                             showNotification(
                               "Welcome to Admin Dashboard",
                               "info"
-                            )
-                          }
+                            );
+                            closeDropdown(); // Close dropdown
+                          }}
                         >
                           <Video className="w-5 h-5 group-hover:text-purple-400 transition-colors duration-300" />
                           <span className="font-medium">Video Upload</span>
@@ -110,8 +126,12 @@ export default function Header() {
 
                       <li>
                         <Link
-                          href="/"
+                          href="/" // Assuming this is the settings page or similar
                           className="flex items-center space-x-3 px-6 py-3 hover:bg-gradient-to-r hover:from-purple-600/10 hover:to-blue-600/10 text-white/90 hover:text-white transition-all duration-300 group"
+                          onClick={() => {
+                            // If you want a notification for settings, add it here.
+                            closeDropdown(); // Close dropdown
+                          }}
                         >
                           <Settings className="w-5 h-5 group-hover:text-purple-400 transition-colors duration-300" />
                           <span className="font-medium">Settings</span>
@@ -122,7 +142,7 @@ export default function Header() {
 
                       <li>
                         <button
-                          onClick={handleSignOut}
+                          onClick={handleSignOut} // handleSignOut now calls closeDropdown
                           className="flex items-center space-x-3 px-6 py-3 w-full text-left hover:bg-gradient-to-r hover:from-red-600/10 hover:to-pink-600/10 text-red-400 hover:text-red-300 transition-all duration-300 group"
                         >
                           <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
@@ -136,9 +156,10 @@ export default function Header() {
                     <Link
                       href="/login"
                       className="flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
-                      onClick={() =>
-                        showNotification("Please sign in to continue", "info")
-                      }
+                      onClick={() => {
+                        showNotification("Please sign in to continue", "info");
+                        closeDropdown(); // Close dropdown
+                      }}
                     >
                       <User className="w-5 h-5" />
                       <span>Sign In</span>
