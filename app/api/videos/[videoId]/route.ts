@@ -5,10 +5,11 @@ import mongoose from "mongoose";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { videoId: string } }
+  { params }: { params: Promise<{ videoId: string }> }
 ) {
   try {
-    const { videoId } = params;
+    // Await the params since it's now a Promise
+    const { videoId } = await params;
 
     // Validate videoId format
     if (!mongoose.Types.ObjectId.isValid(videoId)) {
@@ -22,10 +23,7 @@ export async function GET(
     const video = await Video.findById(videoId).lean();
 
     if (!video) {
-      return NextResponse.json(
-        { error: "Video not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Video not found" }, { status: 404 });
     }
 
     return NextResponse.json(video);
