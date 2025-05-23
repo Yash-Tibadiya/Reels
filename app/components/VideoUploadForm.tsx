@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { useForm } from "react-hook-form";
 import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
 import { Loader2 } from "lucide-react";
 import { useNotification } from "./Notification";
 import { apiClient } from "@/lib/api-client";
 import FileUpload from "./FileUpload";
-import Link from "next/link";
 
 interface VideoFormData {
   title: string;
@@ -17,6 +17,7 @@ interface VideoFormData {
 }
 
 export default function VideoUploadForm() {
+  const router = useRouter(); // Initialize useRouter
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { showNotification } = useNotification();
@@ -55,14 +56,16 @@ export default function VideoUploadForm() {
     try {
       await apiClient.createVideo(data);
       showNotification("Video published successfully!", "success");
-
       // Reset form after successful submission
       setValue("title", "");
       setValue("description", "");
       setValue("videoUrl", "");
       setValue("thumbnailUrl", "");
       setUploadProgress(0);
+
+      router.push("/"); // Navigate to home page
     } catch (error) {
+      console.error("Error publishing video:", error); // Add this line to log the error
       showNotification(
         error instanceof Error ? error.message : "Failed to publish video",
         "error"
@@ -122,7 +125,7 @@ export default function VideoUploadForm() {
         )}
       </div>
 
-      <Link href="/">
+
         <button
           type="submit"
           className="btn btn-primary btn-block"
@@ -137,7 +140,7 @@ export default function VideoUploadForm() {
             "Publish Video"
           )}
         </button>
-      </Link>
+
     </form>
   );
 }
